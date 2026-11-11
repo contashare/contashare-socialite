@@ -1,0 +1,38 @@
+{
+    "name": "contashare/socialite",
+    "description": "Sign in with ContaShare for Laravel Socialite, plus a checker for ContaShare webhook signatures.",
+    "keywords": ["laravel", "socialite", "oauth", "contashare", "webhooks"],
+    "homepage": "https://contashare.com/help/oauth",
+    "license": "MIT",
+    "type": "library",
+    "require": {
+        "php": "^8.2",
+        "laravel/socialite": "^5.15"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^11.0",
+        "orchestra/testbench": "^11.3"
+    },
+    "autoload": {
+        "psr-4": {
+            "ContaShare\\Socialite\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "ContaShare\\Socialite\\Tests\\": "tests/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "ContaShare\\Socialite\\ContaShareServiceProvider"
+            ]
+        }
+    },
+    "scripts": {
+        "test": "phpunit"
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}
