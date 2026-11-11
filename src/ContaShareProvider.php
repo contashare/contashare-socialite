@@ -64,6 +64,8 @@ class ContaShareProvider extends AbstractProvider
     {
         $response = $this->getHttpClient()->get($this->baseUrl.'/api/v1/me', [
             RequestOptions::HEADERS => $this->apiHeaders($token),
+            // Never followed, so the customer's token can't be carried to another site.
+            RequestOptions::ALLOW_REDIRECTS => false,
         ]);
 
         return json_decode((string) $response->getBody(), true);
@@ -93,6 +95,7 @@ class ContaShareProvider extends AbstractProvider
         $response = $this->getHttpClient()->get($this->baseUrl.'/api/v1/shared-data', [
             RequestOptions::HEADERS => $this->apiHeaders($token),
             RequestOptions::HTTP_ERRORS => false,
+            RequestOptions::ALLOW_REDIRECTS => false,
         ]);
 
         $body = json_decode((string) $response->getBody(), true);

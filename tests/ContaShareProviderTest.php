@@ -121,6 +121,24 @@ class ContaShareProviderTest extends TestCase
         $this->assertSame('https://contashare.com/api/v1/shared-data', (string) $this->requests[0]['request']->getUri());
     }
 
+    public function test_a_redirect_is_not_followed_with_the_customers_token(): void
+    {
+        $provider = $this->provider(
+            Request::create('/'),
+            new Response(302, ['Location' => 'https://elsewhere.example/steal']),
+            new Response(200, [], json_encode(['stolen' => true])),
+        );
+
+        try {
+            $provider->sharedData('access-1');
+            $this->fail('A redirect should not be followed.');
+        } catch (RuntimeException $exception) {
+            $this->assertStringContainsString('302', $exception->getMessage());
+        }
+
+        $this->assertCount(1, $this->requests);
+    }
+
     public function test_shared_data_says_why_when_contashare_refuses(): void
     {
         $provider = $this->provider(Request::create('/'), new Response(403, [], json_encode(['message' => 'Your credits have run out.'])));
